@@ -1,0 +1,9 @@
+<!-- public/pattern.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <pattern id="p" patternUnits="userSpaceOnUse" width="120" height="120" patternTransform="rotate(30)">
+      <path d="M0 0 L0 120" stroke="#1b0f12" stroke-width="2" opacity="0.09" />
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#p)" />
+</svg>
