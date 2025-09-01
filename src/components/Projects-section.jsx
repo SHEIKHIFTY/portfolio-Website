@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 export default function Projects() {
   const projects = [
-    { title: "Portfolio Website", desc: "Next.js + Tailwind portfolio.", img: "/portfolio.png", url: "https://myportfolio.com" },
+    { title: "Portfolio Website", desc: "Next.js + Tailwind portfolio.", img: "/portfolio.png", url: "https://sheikh-ifty.vercel.app/" },
     { title: "My Coffee Shop", desc: "Modern e-commerce with Firebase.", img: "/coffee.jpg", url: "https://my-cafe-003.netlify.app/" },
   ];
 

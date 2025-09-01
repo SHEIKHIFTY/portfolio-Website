@@ -148,7 +148,7 @@ const Navbar = () => {
   }`}
 >
   {/* Inner container with solid background */}
-  <div className="h-full w-full bg-[#111111] p-6 flex flex-col justify-start relative">
+  <div className="h-full w-full bg-[#111111] flex flex-col justify-start relative">
     <button
       className="absolute top-4 right-4 text-2xl hover:text-red-500 transition-colors duration-500"
       onClick={() => setIsMenuOpen(false)}

@@ -9,7 +9,7 @@ const allProjects = [
     title: "Portfolio Website",
     desc: "Next.js + Tailwind portfolio.",
     img: "/portfolio.png",
-    url: "https://myportfolio.com",
+    url: "https://sheikh-ifty.vercel.app/",
   },
   {
     title: "My Coffee Shop",
