@@ -1,5 +1,4 @@
-"use client";
-import Link from "next/link";
+'use client';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -9,7 +8,9 @@ export default function Projects() {
     { title: "My Coffee Shop", desc: "Modern e-commerce with Firebase.", img: "/coffee.jpg", url: "https://my-cafe-003.netlify.app/" },
   ];
 
-  const [viewAllRef, viewAllInView] = useInView({ triggerOnce: false, threshold: 0.2 });
+  const useScrollAnimation = (threshold = 0.2) => {
+    return useInView({ triggerOnce: false, threshold });
+  };
 
   return (
     <section className="bg-black text-white py-20">
@@ -24,10 +25,20 @@ export default function Projects() {
           </h2>
         </div>
 
-        {/* Project Cards */}
+        {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((p, i) => {
-            const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
+            const [ref, inView] = useScrollAnimation();
+
+            const variants = {
+              hidden: { opacity: 0, x: i % 2 === 0 ? -120 : 120 },
+              visible: {
+                opacity: 1,
+                x: 0,
+                transition: { type: "spring", stiffness: 40, damping: 20 }, // 🔥 smoother stop
+              },
+            };
+
             return (
               <motion.a
                 key={i}
@@ -35,9 +46,9 @@ export default function Projects() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={variants}
                 className="block bg-neutral-900 rounded-2xl overflow-hidden shadow-lg border border-transparent transition-all hover:shadow-[0_0_25px_rgba(255,99,132,0.7)] hover:bg-neutral-900/80 hover:border-red-700"
               >
                 <img
@@ -46,7 +57,7 @@ export default function Projects() {
                   className="w-full h-72 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold transition-colors duration-500 ease-in-out hover:text-red-500">
+                  <h3 className="text-xl font-semibold transition-colors duration-500 hover:text-red-500">
                     {p.title}
                   </h3>
                   <p className="text-gray-400 text-sm mt-3">{p.desc}</p>
@@ -57,20 +68,14 @@ export default function Projects() {
         </div>
 
         {/* View All Button */}
-        <motion.div
-          ref={viewAllRef}
-          initial={{ opacity: 0, y: 50 }}
-          animate={viewAllInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-          className="text-center mt-12"
-        >
-          <Link
+        <div className="text-center mt-12">
+          <a
             href="/allproject"
             className="bg-red-500 hover:bg-red-700 text-white px-6 py-3 rounded-full font-medium transition"
           >
             View All
-          </Link>
-        </motion.div>
+          </a>
+        </div>
       </div>
     </section>
   );

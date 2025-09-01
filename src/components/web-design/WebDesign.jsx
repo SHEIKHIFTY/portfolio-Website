@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 
 const designs = [
   { title: 'Game UI', image: '/gameui.png', url: 'https://sheikhifty.github.io/Gaming-site/' },
@@ -11,27 +10,16 @@ const designs = [
 ];
 
 const WebDesign = () => {
-  // Ensure client-only rendering for SSR safety
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
-  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.2 });
+  // One hook for the grid
+  const [gridRef, gridInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
 
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.2 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, ease: [0.25, 0.8, 0.25, 1] },
-    },
-  };
-
-  if (!isClient) return null; // prevent SSR crashes
+  if (!isClient) return null;
 
   return (
     <div className="min-h-fit bg-neutral-950 text-white py-12 mt-9">
@@ -39,8 +27,9 @@ const WebDesign = () => {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.8, 0.25, 1] }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           className="text-center mb-8"
         >
           <h1 className="text-3xl sm:text-4xl font-bold text-white">Services</h1>
@@ -52,38 +41,35 @@ const WebDesign = () => {
 
         {/* Grid */}
         <motion.div
-          ref={ref || null}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          ref={gridRef}
+          initial={{ opacity: 0, x: -150 }}
+          animate={gridInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -150 }}
+          transition={{ type: "spring", stiffness: 40, damping: 20 }} // ✅ smooth slide-in
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {designs.map((design, index) => (
-            <motion.a
+            <a
               key={index}
               href={design.url}
               target="_blank"
               rel="noopener noreferrer"
-              variants={itemVariants}
               className="block bg-neutral-900 rounded-2xl overflow-hidden shadow-lg border border-transparent transition-all duration-500 ease-in-out hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] hover:bg-neutral-900/80 hover:border-red-500 hover:scale-105"
             >
-              {/* Image container with responsive height */}
+              {/* Image container */}
               <div className="relative w-full h-60 sm:h-48 md:h-52 lg:h-60 overflow-hidden rounded-t-2xl">
-                <Image
+                <img
                   src={design.image}
                   alt={design.title}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  priority
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
               {/* Title */}
               <div className="p-4 bg-gray-800 transition-colors duration-300 hover:bg-red-600/30">
-                <h2 className="text-xl sm:text-lg font-semibold text-center">{design.title}</h2>
+                <h2 className="text-xl sm:text-lg font-semibold text-center">
+                  {design.title}
+                </h2>
               </div>
-            </motion.a>
+            </a>
           ))}
         </motion.div>
       </div>
@@ -92,5 +78,6 @@ const WebDesign = () => {
 };
 
 export default WebDesign;
+
 
 
