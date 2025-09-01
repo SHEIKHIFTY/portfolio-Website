@@ -93,7 +93,7 @@ const Footer = () => {
                 <li className="flex items-center justify-center md:justify-start gap-2">
                   <MdLocationOn className="text-red-600" />
                   <a
-                    href="https://maps.google.com"
+                    href="https://www.google.com/maps/place/SKY+Tower/@23.860784,90.4202417,19z/data=!4m10!1m2!2m1!1sgawair+Mazibari+sky+tower!3m6!1s0x3755c5ed8cbd3bbf:0xba284e5a3488b47b!8m2!3d23.8607917!4d90.4202475!15sChlnYXdhaXIgTWF6aWJhcmkgc2t5IHRvd2VykgEMaG9tZV9idWlsZGVyqgFREAEqDSIJc2t5IHRvd2VyKAAyHxABIhsPKMvWTLPtOsb757JO8nKYch4fIGurhXxpFl4yHRACIhlnYXdhaXIgbWF6aWJhcmkgc2t5IHRvd2Vy4AEA!16s%2Fg%2F11l1p3l_wf?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative inline-block hover:text-red-600 transition-colors

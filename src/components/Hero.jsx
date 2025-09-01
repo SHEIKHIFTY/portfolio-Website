@@ -59,7 +59,7 @@ const Hero = () => {
             A personal portfolio is a collection of my work, achievements, and
             skills that highlights my abilities and professional growth.
           </p>
-          <Link href="/Projects">
+          <Link href="/allproject">
             <button className="flex items-center space-x-3 px-8 py-3 bg-primaryRed text-darkText font-semibold rounded-full shadow-lg hover:bg-red-800 transition-colors duration-500">
               <span>View Projects</span>
               <FaArrowRight />
