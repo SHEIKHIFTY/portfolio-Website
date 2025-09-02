@@ -1,8 +1,9 @@
 'use client';
+
 import React from 'react';
-import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 
 const contactCards = [
   {
@@ -28,22 +29,32 @@ const contactCards = [
   },
 ];
 
-const ContactSection = () => {
-  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.2 });
-
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.2 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.2, ease: [0.25, 0.8, 0.25, 1] },
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2, // cards appear one by one
     },
-  };
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+const ContactSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: false, // triggers every scroll
+    threshold: 0.2,
+  });
 
   return (
     <div className="bg-neutral-950 text-white py-12">
@@ -51,13 +62,14 @@ const ContactSection = () => {
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.8, 0.25, 1] }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           className="text-center mb-8 mt-12"
         >
           <h1 className="text-4xl font-bold">Contact</h1>
           <p className="text-gray-400 mt-2 mb-6">
-            <span className="text-white">Home</span> &gt; <span className="text-red-500">Contact</span>
+            <span className="text-white">Home</span>  <span className="text-red-500">Contact</span>
           </p>
         </motion.div>
 
@@ -105,3 +117,4 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+

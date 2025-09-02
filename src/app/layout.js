@@ -3,7 +3,8 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import GetInTouch from "../components/GetInTouch";
 import Footer from "../components/Footer";
-import MotionProvider from "./motion-provider"; // ✅ import MotionProvider
+import MotionProvider from "./motion-provider"; // ✅ Framer Motion provider
+import CurserSmoke from "../components/CurserSmoke"; // ✅ Import cursor smoke
 
 export const metadata = {
   title: "DOOM | Sheikh Ifty",
@@ -13,7 +14,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-[#111111] text-[#f5f5f5] font-inter flex flex-col min-h-screen">
+      <body className="bg-[#111111] text-[#f5f5f5] font-inter flex flex-col min-h-screen relative overflow-hidden">
+        {/* 🔥 Cursor Smoke Animation */}
+        <CurserSmoke />
+
         <MotionProvider>
           {/* Navbar always at top */}
           <Navbar />

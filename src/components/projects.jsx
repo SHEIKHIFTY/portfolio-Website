@@ -25,34 +25,33 @@ const allProjects = [
 ];
 
 export default function Projects() {
-  // Client-only rendering
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
-  // Use a single hook for the entire projects grid
   const [gridRef, gridInView] = useInView({
-    triggerOnce: false,
+    triggerOnce: false, // Ensure it triggers every time
     threshold: 0.2,
   });
 
-  // Container variants for the staggered animation
+  // Container variants with stagger
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: {
-        staggerChildren: 0.15, // Adjusted for a slightly faster stagger
+        staggerChildren: 0.2, // Time between each child's animation
       },
     },
   };
 
-  // Item variants for the individual project cards
+  // Item variants for simple fade-in
   const itemVariants = {
-    hidden: { opacity: 0, x: -100 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      x: 0,
-      transition: { duration: 0.6, ease: "easeInOut" }, // Now a smooth ease-in-out transition
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
     },
   };
 
@@ -65,7 +64,7 @@ export default function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="text-center mb-16"
         >
@@ -75,7 +74,7 @@ export default function Projects() {
             <span className="text-red-500">Projects</span>
           </p>
         </motion.div>
-
+        
         {/* Projects Grid */}
         <motion.div
           ref={gridRef}

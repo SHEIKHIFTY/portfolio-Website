@@ -5,7 +5,59 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import { m } from "motion/react"; // ✅ motion
 import { Typewriter } from "react-simple-typewriter";
+import { useEffect, useRef } from "react";
+
 const Hero = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    const STAR_COUNT = 100;
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random(),
+        delta: Math.random() * 0.02 + 0.005,
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      stars.forEach((star) => {
+        star.alpha += star.delta;
+        if (star.alpha > 1 || star.alpha < 0) star.delta = -star.delta;
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    };
+    animate();
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-16 px-4 md:px-12 overflow-hidden bg-black">
       {/* Background Image */}
@@ -20,20 +72,26 @@ const Hero = () => {
         <div className="absolute inset-0 bg-black opacity-40"></div>
       </div>
 
+      {/* Star Canvas (top layer of background) */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-20 pointer-events-none"
+      />
+
       {/* Background large text */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-10 z-10">
+      <div className="absolute inset-0 flex items-center justify-center opacity-10 z-20">
         <span className="text-8xl md:text-[200px] lg:text-[250px] font-extrabold text-white text-stroke-2">
           WEB DESIGNER
         </span>
       </div>
 
       {/* Content */}
-      <div className="relative z-20 flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto">
+      <div className="relative z-40 flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto">
         {/* Left Content (animated left -> right) */}
         <m.div
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ amount: 0.3, once: false }} // ✅ animates every time you scroll
+          viewport={{ amount: 0.3, once: false }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 lg:w-1/2 p-4 md:p-8 mt-4"
         >
@@ -41,20 +99,19 @@ const Hero = () => {
             HELLO
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-darkText">
-                 I'm Sheikh Ifty a{" "}<br />
-                
-                <span className="text-red-600">
-                     <Typewriter
-                       words={["Web Developer.", "Designer.", "Editor."]}
-                      loop={true}             // makes it repeat forever
-                       cursor
-                        cursorStyle="|"
-                        typeSpeed={80}          // typing speed
-                        deleteSpeed={50}        // deleting speed
-                         delaySpeed={3000}       // wait 3s before deleting
-                          />
-                       </span>
-                    </h1>
+            I'm Sheikh Ifty a <br />
+            <span className="text-red-600">
+              <Typewriter
+                words={["Web Developer.", "Designer.", "Editor."]}
+                loop={true}
+                cursor
+                cursorStyle="|"
+                typeSpeed={80}
+                deleteSpeed={50}
+                delaySpeed={3000}
+              />
+            </span>
+          </h1>
           <p className="text-lg text-gray-400 max-w-lg">
             A personal portfolio is a collection of my work, achievements, and
             skills that highlights my abilities and professional growth.
@@ -108,3 +165,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
