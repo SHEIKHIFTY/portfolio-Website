@@ -63,8 +63,8 @@ const ContactSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          viewport={{ once: false, amount: 0.2, }}
+          transition={{ duration: 0.6, ease: "easeInOut", delay: 0.2 }}
           className="text-center mb-8 mt-12"
         >
           <h1 className="text-4xl font-bold">Contact</h1>
