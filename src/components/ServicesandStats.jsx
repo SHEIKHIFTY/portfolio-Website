@@ -31,8 +31,8 @@ const ServiceCard = ({ icon: Icon, title, projects, link, delay }) => (
 
 const ServicesAndStats = () => {
   const services = [
-    { icon: FaLaptopCode, title: "Web Design", projects: "3", link: "/services" },
-    { icon: FaCube, title: "UI/UX Design", projects: "3", link: "/services" },
+    { icon: FaLaptopCode, title: "Web Design", projects: "3", link: "/services/web-design" },
+    { icon: FaCube, title: "UI/UX Design", projects: "3", link: "/services/web-design" },
     { icon: FaLightbulb, title: "Website", projects: "3", link: "/allproject" },
     { icon: FaEnvelopeOpenText, title: "Research", projects: "0", link: "/" },
   ];
