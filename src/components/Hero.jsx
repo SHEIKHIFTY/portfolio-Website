@@ -7,7 +7,7 @@ import { m } from "motion/react"; // ✅ motion
 import { Typewriter } from "react-simple-typewriter";
 import { useEffect, useRef } from "react";
 
-const Hero = () => {
+const Hero = ({data ={}}) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -96,10 +96,10 @@ const Hero = () => {
           className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 lg:w-1/2 p-4 md:p-8 mt-4"
         >
           <p className="text-primaryRed text-lg font-medium uppercase tracking-wider">
-            HELLO
+           {data?.header}
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-darkText">
-            I'm Sheikh Ifty a <br />
+            I'm {data?.name} a <br />
             <span className="text-red-600">
               <Typewriter
                 words={["Web Developer.", "Designer.", "Editor."]}
@@ -113,10 +113,9 @@ const Hero = () => {
             </span>
           </h1>
           <p className="text-lg text-gray-400 max-w-lg">
-            A personal portfolio is a collection of my work, achievements, and
-            skills that highlights my abilities and professional growth.
+           {data?.description}
           </p>
-          <Link href="/allproject">
+          <Link href={data?.button || "/projects"} alt="vew projects">
             <button className="flex items-center space-x-3 px-8 py-3 bg-primaryRed text-darkText font-semibold rounded-full shadow-lg hover:bg-red-800 transition-colors duration-500">
               <span>View Projects</span>
               <FaArrowRight />
@@ -135,10 +134,11 @@ const Hero = () => {
           <div className="relative w-64 h-60 md:w-100 md:h-100 lg:w-[28rem] lg:h-[28rem] rounded-full flex items-center justify-center bg-white shadow-4xl border-4 border-red">
             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-transparent transition-all duration-500 ease-in-out hover:border-red-950 hover:shadow-[0_0_25px_rgba(239,68,68,0.7)]">
               <Image
-                src="/mydp.jpeg"
+                src={"https://i.ibb.co.com/d42jgJ5z/Whats-App-Image-2025-09-01-at-8-42-23-AM.jpg"}
                 alt="Sheikh Ifty - Web Developer"
                 fill
                 className="object-cover"
+                unoptimized
               />
             </div>
           </div>

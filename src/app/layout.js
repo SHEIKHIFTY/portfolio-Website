@@ -1,10 +1,8 @@
 // app/layout.js
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import GetInTouch from "../components/GetInTouch";
-import Footer from "../components/Footer";
-import MotionProvider from "./motion-provider"; // ✅ Framer Motion provider
-import CurserSmoke from "../components/CurserSmoke"; // ✅ Import cursor smoke
+import { Toaster } from "@/components/ui/sonner";
+
 
 export const metadata = {
   title: "DOOM | Sheikh Ifty",
@@ -13,25 +11,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-[#111111] text-[#f5f5f5] font-inter flex flex-col min-h-screen relative overflow-hidden">
-        {/* 🔥 Cursor Smoke Animation */}
-        <CurserSmoke />
+    <html className="light" lang="en">
+      <body>
 
-        <MotionProvider>
-          {/* Navbar always at top */}
-          <Navbar />
-
-          {/* Page content grows to fill space */}
-          <main className="flex-grow">{children}</main>
-
-          {/* GetInTouch section */}
-          <GetInTouch />
-
-          {/* Footer always at bottom */}
-          <Footer />
-        </MotionProvider>
-      </body>
+      <ThemeProvider  attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange>
+       {children}
+      </ThemeProvider>
+      <Toaster />
+              </body>
     </html>
   );
 }

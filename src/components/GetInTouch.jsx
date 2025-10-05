@@ -2,44 +2,76 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useState } from "react";
 
 const GetInTouch = () => {
-  const setRequiredMsg = (e) => e.target.setCustomValidity("Please fill it out");
-  const clearRequiredMsg = (e) => e.target.setCustomValidity("");
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    // Optional: form.submit() logic here
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Intersection Observer to trigger animation
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccessMsg("");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/appointment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccessMsg("Appointment booked successfully!");
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      } else {
+        setErrorMsg(data.message || "Something went wrong!");
+      }
+    } catch (err) {
+      setErrorMsg("Something went wrong!");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.2 });
 
   return (
     <section className="bg-black py-20 px-6 lg:px-24">
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, x: 100 }} // start from right
-        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }} // animate to original position
-        transition={{ duration: 0.8, ease: "easeOut" }} // smooth duration
+        initial={{ opacity: 0, x: 100 }}
+        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="max-w-7xl mx-auto"
       >
         <div className="bg-neutral-900 rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-start lg:items-center border-transparent transition-all duration-700 ease-in-out hover:shadow-[0_0_25px_rgba(239,68,68,0.7)] hover:bg-neutral-900/80 hover:border-red-700">
-          {/* Left Section: Text */}
           <div className="text-white w-full lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
             <h3 className="text-red-500 uppercase text-sm tracking-widest mb-2">Get In Touch</h3>
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Elevate your brand with Me</h2>
             <p className="text-gray-400 leading-relaxed">
-              lished fact that a reader will be distrol acted bioly desig ished fact that a reader will acted ished fact that a reader will be distrol acted
+              Fill out the form and I will get back to you as soon as possible.
             </p>
+            {successMsg && <p className="text-green-500 mt-2">{successMsg}</p>}
+            {errorMsg && <p className="text-red-500 mt-2">{errorMsg}</p>}
           </div>
 
-          {/* Right Section: Form */}
           <div className="w-full lg:w-1/2">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="flex flex-col md:flex-row gap-6">
@@ -47,20 +79,18 @@ const GetInTouch = () => {
                   type="text"
                   name="name"
                   placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
                   required
-                  onInvalid={setRequiredMsg}
-                  onInput={clearRequiredMsg}
-                  autoComplete="name"
                   className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 placeholder-gray-500 focus:outline-none focus:border-red-600"
                 />
                 <input
                   type="tel"
                   name="phone"
                   placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
-                  onInvalid={setRequiredMsg}
-                  onInput={clearRequiredMsg}
-                  autoComplete="tel"
                   className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 placeholder-gray-500 focus:outline-none focus:border-red-600"
                 />
               </div>
@@ -70,19 +100,18 @@ const GetInTouch = () => {
                   type="email"
                   name="email"
                   placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
-                  onInvalid={setRequiredMsg}
-                  onInput={clearRequiredMsg}
-                  autoComplete="email"
                   className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 placeholder-gray-500 focus:outline-none focus:border-red-600"
                 />
                 <input
                   type="text"
                   name="subject"
                   placeholder="Subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   required
-                  onInvalid={setRequiredMsg}
-                  onInput={clearRequiredMsg}
                   className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 placeholder-gray-500 focus:outline-none focus:border-red-600"
                 />
               </div>
@@ -92,25 +121,19 @@ const GetInTouch = () => {
                   name="message"
                   placeholder="Your Message"
                   rows="5"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
-                  onInvalid={setRequiredMsg}
-                  onInput={clearRequiredMsg}
                   className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-4 placeholder-gray-500 focus:outline-none focus:border-red-600"
-                ></textarea>
+                />
               </div>
 
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-red-500 text-white font-bold py-4 px-6 rounded-lg hover:bg-red-800 transition-colors duration-300 flex items-center justify-center gap-2"
               >
-                Appointment Now
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                {loading ? "Booking..." : "Appointment Now"}
               </button>
             </form>
           </div>
@@ -121,4 +144,3 @@ const GetInTouch = () => {
 };
 
 export default GetInTouch;
-
