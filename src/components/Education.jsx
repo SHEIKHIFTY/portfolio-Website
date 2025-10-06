@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function Education() {
   const [educationData, setEducationData] = useState([]);
 
-  // Fetch education from backend
+  // Fetch education from backende
   const fetchEducation = async () => {
     try {
       const res = await fetch("/api/education");

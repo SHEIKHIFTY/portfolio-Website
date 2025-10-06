@@ -38,15 +38,16 @@ const Footer = () => {
               <p className="text-white text-2xl font-light mb-6">Great</p>
 
               {/* Newsletter */}
-              <div className="flex items-center border-b border-gray-500 max-w-xs mx-auto md:mx-0">
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full bg-transparent py-2 px-2 text-gray-200 focus:outline-none"
-                />
-                <button className="text-gray-400 hover:text-red-600 transition-colors">✉</button>
-              </div>
-            </div>
+              <div className="text-center md:text-left space-y-2">
+
+               <p className="text-gray-300 font-medium relative inline-block hover:text-red-600 transition-colors
+                        after:content-[''] after:absolute after:left-0 after:-bottom-1
+                        after:w-0 after:h-[2px] after:bg-red-600 after:transition-all
+                        after:duration-300 hover:after:w-full">
+                      Turning visions into reality 💡
+                   </p>
+                     </div>
+               </div>
 
             {/* Middle Section: Quick Links */}
             <div>
