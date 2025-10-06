@@ -115,12 +115,12 @@ const Hero = ({data ={}}) => {
           <p className="text-lg text-gray-400 max-w-lg">
            {data?.description}
           </p>
-          <Link href={data?.button || "/projects"} alt="vew projects">
-            <button className="flex items-center space-x-3 px-8 py-3 bg-primaryRed text-darkText font-semibold rounded-full shadow-lg hover:bg-red-800 transition-colors duration-500">
-              <span>View Projects</span>
-              <FaArrowRight />
-            </button>
-          </Link>
+          <Link href={"/allproject"}>
+  <button className="flex items-center space-x-3 px-8 py-3 bg-primaryRed text-darkText font-semibold rounded-full shadow-lg hover:bg-red-800 transition-colors duration-500">
+    <span>View Projects</span>
+    <FaArrowRight />
+  </button>
+</Link>
         </m.div>
 
         {/* Right Image (animated right -> left) */}
@@ -131,17 +131,19 @@ const Hero = ({data ={}}) => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative w-full lg:w-1/2 mt-12 lg:mt-0 flex justify-center items-center"
         >
-          <div className="relative w-64 h-60 md:w-100 md:h-100 lg:w-[28rem] lg:h-[28rem] rounded-full flex items-center justify-center bg-white shadow-4xl border-4 border-red">
-            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-transparent transition-all duration-500 ease-in-out hover:border-red-950 hover:shadow-[0_0_25px_rgba(239,68,68,0.7)]">
-              <Image
-                src={"https://i.ibb.co.com/d42jgJ5z/Whats-App-Image-2025-09-01-at-8-42-23-AM.jpg"}
-                alt="Sheikh Ifty - Web Developer"
-                fill
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-          </div>
+         <div className="relative w-64 h-60 sm:w-80 sm:h-80 md:w-100 md:h-100 lg:w-[28rem] lg:h-[28rem] rounded-full flex items-center justify-center bg-white shadow-4xl border-4 border-red">
+  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-transparent transition-all duration-500 ease-in-out hover:border-red-950 hover:shadow-[0_0_25px_rgba(239,68,68,0.7)]">
+    <Image
+      src="https://i.ibb.co/d42jgJ5z/Whats-App-Image-2025-09-01-at-8-42-23-AM.jpg"
+      alt="Sheikh Ifty - Web Developer"
+      fill
+      className="object-cover"
+      unoptimized
+      sizes="(max-width: 768px) 100vw, 28rem"
+    />
+  </div>
+</div>
+
         </m.div>
       </div>
 
