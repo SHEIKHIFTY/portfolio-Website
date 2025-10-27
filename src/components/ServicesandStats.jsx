@@ -50,10 +50,10 @@ const ServicesAndStats = ({data}) => {
 
   // Example stats
   const stats = [
-    { value: 3, label: services.length, label: "Our Project Complete" },
-    { value: 1, label: "Years of Experience" },
-    { value: 0, label: "Clients Reviews" },
-    { value: 0, label: "Our Satisfied Clients" },
+    { value: 4, label: services.length, label: " Projects Complete" },
+    { value: 5, label: "Months of Experience" },
+    { value: 1, label: "Clients Reviews" },
+    { value: 1, label: "Our Satisfied Clients" },
   ];
 
   const [statsRef, statsInView] = useInView({ triggerOnce: false, threshold: 0.2 });
@@ -86,12 +86,12 @@ const ServicesAndStats = ({data}) => {
             className="bg-surface p-8 rounded-lg shadow-lg flex flex-col justify-center min-h-[300px]"
           >
             <h2 className="text-6xl md:text-8xl font-extrabold text-red-500 leading-tight mb-4">
-              {statsInView && <CountUp start={0} end={1} duration={2} />}{" "}
-              <span className="block text-4xl font-semibold">Years Of</span>{" "}
+              {statsInView && <CountUp start={0} end={5} duration={2} />}{" "}
+              <span className="block text-4xl font-semibold">Months Of</span>{" "}
               <span className="block text-4xl font-semibold">Experience</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-md">
-              Business consulting consultants provide expert advice and guide businesses to improve their performance and efficiency.
+              A passionate front-end developer dedicated to crafting seamless and engaging user experiences.
             </p>
           </motion.div>
 
